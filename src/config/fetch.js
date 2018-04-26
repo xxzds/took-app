@@ -4,7 +4,8 @@ import qs from 'qs'
 Vue.prototype.$http = axios
 
 // 应用数据和后台富文本数据的地址不同
-let baseUrl = 'http://www.tooklili.com:81/tookApp/'
+//let baseUrl = 'http://www.tooklili.com:81/tookApp/'
+let baseUrl = 'http://'+window.location.host+'/tookApp/'
 
 const ajaxURL = {
     // 主页
