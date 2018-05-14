@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // 路由懒加载
 import App from '../App'
-const index = () => import('@/page/index/index')
-const superSearch = () => import('@/page/superSearch/index')
-const itemDetail = () => import('@/page/itemDetail/index')
-const searchpage = () => import('@/page/searchpage/index')
-const listpage = () => import('@/page/list/index')
-const itemCates = () => import('@/page/itemCates/index')
-const superPageList = () => import('@/page/superPageList/index')
-const test = () => import('@/components/couponItems')
+import index from '@/page/index/index';
+import superSearch from '@/page/superSearch/index';
+import itemDetail from '@/page/itemDetail/index';
+import searchpage from '@/page/searchpage/index';
+import listpage from '@/page/list/index';
+import itemCates from '@/page/itemCates/index';
+import superPageList from '@/page/superPageList/index';
+import test from '@/components/couponItems';
 Vue.use(Router)
 
 export default new Router({
