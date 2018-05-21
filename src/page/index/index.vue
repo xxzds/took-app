@@ -14,9 +14,10 @@
 <script>
 import appContainer from './container'
 import navBar from './navBar'
-import headBar from '../../components/headBar'
+import headBar from '../../components/headBar';
+
 export default {
-  name: 'HelloWorld',
+  name: 'firstpage',
   components: { navBar ,headBar ,appContainer},
   data () {
     return {

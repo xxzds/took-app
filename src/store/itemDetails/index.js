@@ -1,5 +1,5 @@
 import { get_local_cache, set_local_cache } from '@/config/cache'
-import { fetch } from '@/config/fetch'
+import { fetch } from '@/config/fetch';
 const itemDetails = {
     state:{
         itemDetails_id:'',

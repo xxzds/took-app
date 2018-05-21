@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <transition :name="transitionName">
-          <router-view class="child-view"/>
-    </transition>
+    <keep-alive>
+    <router-view v-if="$route.meta.keepAlive" class="child-view"></router-view>
+</keep-alive>
+<router-view v-if="!$route.meta.keepAlive" class="child-view"></router-view>
     <!--回到顶部-->
       <div class="backTop" @click="gotop">
           <div class="go-top top-button-hide">
@@ -14,103 +15,110 @@
 
 <script>
 export default {
-  name: 'App',
-  data(){
-    return{
-      transitionName: 'slide-right',
-      flag:true
-    }
+  name: "App",
+  data() {
+    return {
+      transitionName: "slide-right",
+      flag: true
+    };
   },
-  computed:{
-
+  computed: {},
+  watch: {
+    $route(val) {}
   },
-  watch:{
-    $route(val){
-
-    }
-  },
-  created(){
-     this.$nextTick(function(){
+  created() {
+    this.$nextTick(function() {
       //获取轮播图片
-     // this.getItemImg();
+      // this.getItemImg();
       this.scrollEvent();
-      window.addEventListener("touchmove",this.scrollEvent );
-    })
+      window.addEventListener("touchmove", this.scrollEvent);
+    });
   },
-  methods:{
-    gotop:function(){
-      setTimeout(function(){
-        $("html,body").animate({scrollTop:$("body").offset().top},300);
+  methods: {
+    gotop: function() {
+      setTimeout(function() {
+        $("html,body").animate({ scrollTop: $("body").offset().top }, 300);
       }, 500);
-        $(".go-top").addClass("top-button-hide").removeClass("top-button-show");
-      },
-    scrollEvent:function(){
-      var scrollTop = window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop| 0
+      $(".go-top")
+        .addClass("top-button-hide")
+        .removeClass("top-button-show");
+    },
+    scrollEvent: function() {
+      var scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop | 0;
       if (scrollTop > 200) {
-         $(".go-top").removeClass("top-button-hide").addClass("top-button-show");
+        $(".go-top")
+          .removeClass("top-button-hide")
+          .addClass("top-button-show");
       } else {
-         $(".go-top").addClass("top-button-hide").removeClass("top-button-show");
+        $(".go-top")
+          .addClass("top-button-hide")
+          .removeClass("top-button-show");
       }
     }
   },
-  beforeRouteUpdate (to, from, next) {
-        let isBack = this.$router.isBack
-        if (isBack) {
-            this.transitionName = 'slide-right'
-        } else {
-            this.transitionName = 'slide-left'
-        }
-        this.$router.isBack = false
-        next()
+  beforeRouteUpdate(to, from, next) {
+    let isBack = this.$router.isBack;
+    if (isBack) {
+      this.transitionName = "slide-right";
+    } else {
+      this.transitionName = "slide-left";
     }
-}
+    this.$router.isBack = false;
+    next();
+  }
+};
 </script>
 
 <style lang="less">
-input{outline:none} 
+input {
+  outline: none;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: .4rem;
+  font-size: 0.4rem;
   margin: 0 auto;
   // max-width:640px;
   height: 100%;
-  .child-view{
-      font-size: .4rem;
-      height: 100%;
+  .child-view {
+    font-size: 0.4rem;
+    height: 100%;
   }
 }
 .go-top {
-    display: block;
-    width: 42px;
-    height: 42px;
-    position: fixed;
-    right: 20px;
-    bottom: 64px;
-    z-index: 10000;
-    background-image: url('./assets/icon/go_top.png');
-    background-size: contain;
-    opacity: 0;
-    transition: bottom .8s ease, opacity .6s ease;
+  display: block;
+  width: 42px;
+  height: 42px;
+  position: fixed;
+  right: 20px;
+  bottom: 64px;
+  z-index: 10000;
+  background-image: url("./assets/icon/go_top.png");
+  background-size: contain;
+  opacity: 0;
+  transition: bottom 0.8s ease, opacity 0.6s ease;
 }
 .top-button-show {
-    bottom: 64px;
-    opacity: 1;
+  bottom: 64px;
+  opacity: 1;
 }
 .top-button-hide {
-    bottom: -64px;
-    opacity: 0;
+  bottom: -64px;
+  opacity: 0;
 }
 .go-top span {
-    position: absolute;
-    bottom: 9px;
-    width: 100%;
-    display: block;
-    height: 12px;
-    line-height: 12px;
-    text-align: center;
-    font-size: 12px;
-    color: #333;
+  position: absolute;
+  bottom: 9px;
+  width: 100%;
+  display: block;
+  height: 12px;
+  line-height: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #333;
 }
 </style>

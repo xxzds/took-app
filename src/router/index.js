@@ -10,10 +10,11 @@ import listpage from '@/page/list/index';
 import itemCates from '@/page/itemCates/index';
 import superPageList from '@/page/superPageList/index';
 import test from '@/components/couponItems';
+import eventbus from '../utils/eventbus';
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash', 
+  mode: 'history', 
   base: '/dist/',
   routes: [
     {
@@ -26,6 +27,9 @@ export default new Router({
          name:'index',
          path:'/index',
          component:index,
+         meta: {
+          keepAlive: true // 需要被缓存
+        }
        },
        {
           name:'home',
@@ -66,6 +70,9 @@ export default new Router({
           name:'listpage',
           path:'/listpage',
           component:listpage,
+          meta: {
+            keepAlive: true // 需要被缓存
+          }
         },
         {
           name:'itemCates',
@@ -79,5 +86,15 @@ export default new Router({
         },
      ]
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop
+      }
+      return { x: 0, y: to.meta.savedPosition || 0 }
+    }
+  }
 })
