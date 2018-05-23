@@ -46,9 +46,6 @@
         <coupon-items :queryUrl="url" :params='params' :flag="true"></coupon-items>
       </div>
     </div>
-    <button class="btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js!">
-      Copy to clipboard
-    </button>
     <!-- 底部菜单 -->
     <div class="nbmenu">
       <div class="nbnav nb-btn1"><a href="javascript:;" @click="goHome"><i class="fa fa-home" style="font-size:12px"></i>&nbsp;首页</a></div>

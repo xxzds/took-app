@@ -14,7 +14,7 @@
             <!-- <img :src="item.picUrl"/> -->
             <img v-lazy.loadmore="item.picUrl"/>
             <span>
-             {{index}} 券￥{{item.quan}}
+            券￥{{item.quan}}
             </span>
           </div>
           <div class="text">
@@ -89,8 +89,7 @@ export default {
       } else {
         this.$router.push({
           name: "itemDetail",
-          params: { item: item },
-          query: { id: item.numIid }
+          query: item
         });
       }
     },
