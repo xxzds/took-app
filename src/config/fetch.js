@@ -21,6 +21,8 @@ const ajaxURL = {
     queryCouponItemsByKeyWords: baseUrl + "queryCouponItemsByKeyWords",//关键字查询商品
     getRandomItemByCateId: baseUrl + "getRandomItemByCateId",//通商品类别查询
     querysuperSearchItems: baseUrl + "superSearchItems",//超级搜查询
+
+    getShortLinkUrl:baseUrl+"getShortLinkUrl",//短链接
 }
 
 export var fetch = async(type = 'POST', url = '', data = {}) => {

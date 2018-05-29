@@ -14,7 +14,7 @@ import eventbus from '../utils/eventbus';
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history', 
+  mode: 'hash', 
   base: '/dist/',
   routes: [
     {
@@ -40,6 +40,9 @@ export default new Router({
           name:'superSearch',
           path:'/superSearch',
           component:superSearch,
+          meta:{
+            keepAlive:true
+          }
         },
         {
           name:'ninenine',
@@ -83,6 +86,9 @@ export default new Router({
           name:'superPageList',
           path:'/superPageList',
           component:superPageList,
+          meta:{
+            keepAlive:true
+          }
         },
      ]
     }

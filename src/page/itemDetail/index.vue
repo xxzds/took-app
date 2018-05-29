@@ -107,7 +107,7 @@ import couponItems from "../../components/couponItems";
 import { fetch, getitemUrl } from "@/config/fetch";
 import { MessageBox, Toast, Indicator } from "mint-ui";
 import Clipboard from "clipboard";
-import eventbus from '../../utils/eventbus';
+import eventbus from "../../utils/eventbus";
 
 export default {
   name: "itemDetail",
@@ -129,14 +129,14 @@ export default {
       jumpUrl: "",
       tbCopy: false,
       url: "",
-      params: {}
+      params: {},
+      shortUrl: ""
     };
   },
   computed: {
     id() {
       return this.$store.state.itemDetails.itemDetails_id;
-    },
-    ...mapGetters(["get_itemDetails_id", "get_item"])
+    }
   },
   methods: {
     getTwdAndShortLinkInfo: function(type) {
@@ -238,9 +238,7 @@ export default {
     },
     goBack: function() {
       // this.$router.push();
-       //传递一个map，choiceHospital是key，hospital是value
-       console.dir(eventbus);
-      eventbus.$emit('item_detail',this.get_item);
+      //传递一个map，choiceHospital是key，hospital是value
       this.$router.go(-1);
     },
     goHome: function() {
@@ -264,7 +262,7 @@ export default {
           }
         });
       } else {
-        this.itemDetails = JSON.parse(this.get_item);
+        this.itemDetails = this.item;
       }
       console.log(this.itemDetails.id);
       console.log(typeof this.itemDetails);
@@ -272,10 +270,25 @@ export default {
     camera: function() {
       $(".nb-sharecanvas").fadeIn();
     },
+
+    getShortLink: function(callback) {
+      let self = this;
+      const params = {
+        url: window.location.href
+      };
+
+      fetch("POST", "getShortLinkUrl", params).then(res => {
+        let url = res.data;
+        self.shortUrl = url;
+
+        callback && callback();
+      });
+    },
+
     getCamera: function() {
       const obj = this;
       const params = {
-        url: window.location.href
+        url: obj.shortUrl
       };
       fetch("POST", "querygetQrCodeBase64", params)
         .then(res => {
@@ -430,17 +443,22 @@ export default {
     }
   },
   created() {
-    this.$nextTick(function() {
-      console.dir(this.get_item);
+    let self = this;
+    console.log("123123");
+    console.dir(self.$route.query);
+    self.$nextTick(function() {
       //const clipboard = new Clipboard('.btn');
-      this.item = JSON.parse(this.get_item);
+      self.item = self.$route.query;
       //获取轮播图片
-      this.getItemImg();
-      this.getItemDetail();
+      self.getItemImg();
+      self.getItemDetail();
       //获取本栏目数据
-      this.getRandomItemByCateId();
+      self.getRandomItemByCateId();
       //
-      this.getCamera();
+
+      self.getShortLink(() => {
+        self.getCamera();
+      });
     });
   }
 };

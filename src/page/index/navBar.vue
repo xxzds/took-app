@@ -33,6 +33,8 @@ export default {
             }
         },
         itemClick(item) {
+            sessionStorage.setItem("ssKey","");
+            sessionStorage.setItem("currentKey",0);
             this.$router.push({name: item.route})
             this.selected = item.route
         }
